@@ -286,9 +286,10 @@ public class MainActivity extends AppCompatActivity{
                     System.out.println(reth);
                     System.out.println(sknt);
                     System.out.println(alth);
+                    Toast.makeText(getApplicationContext(),time,Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(),tmpf+"F",Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(),dwpf+"F",Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(),reth,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),reth+"Hum",Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(),sknt+"Knots",Toast.LENGTH_LONG).show();
                     Toast.makeText(getApplicationContext(),alth+"Inch",Toast.LENGTH_LONG).show();
 
@@ -302,7 +303,7 @@ public class MainActivity extends AppCompatActivity{
                     count();
                     fl_no=((EditText)findViewById(R.id.fl_no)).getText().toString();
                     time=getDepartureTime(fl_no);
-                    Toast.makeText(getApplicationContext(),time,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),time,Toast.LENGTH_LONG).show();
                     if (!(time.equals("NA"))) {
                         time = time + gmt_offset;
                         getWeather();
@@ -396,7 +397,7 @@ public class MainActivity extends AppCompatActivity{
 
     /** Displays a notification when the date is updated */
     private void displayToast() {
-        Toast.makeText(this, new StringBuilder().append("Date choosen is ").append(pDisplayDate.getText()),  Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, new StringBuilder().append("Date choosen is ").append(pDisplayDate.getText()),  Toast.LENGTH_SHORT).show();
 
     }
 
@@ -425,9 +426,9 @@ public class MainActivity extends AppCompatActivity{
         src = ((EditText)findViewById(R.id.Source)).getText().toString();
         des =  ((EditText)findViewById(R.id.Dest)).getText().toString();
         String date = String.valueOf(pYear)+String.valueOf(pMonth+1)+String.valueOf(pDay);
-        Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
         String url = "http://developer.goibibo.com/api/search/?app_id="+appid+"&app_key="+fl_key+"&format=json&source="+src.toUpperCase()+"&destination="+des.toUpperCase()+"&dateofdeparture="+date+"&seatingclass=E&adults=1&children=0&infants=0";
-        Toast.makeText(getApplicationContext(),url,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),url,Toast.LENGTH_LONG).show();
         System.out.println(url);
         new Fetcher().execute(url, null, null);
     }
