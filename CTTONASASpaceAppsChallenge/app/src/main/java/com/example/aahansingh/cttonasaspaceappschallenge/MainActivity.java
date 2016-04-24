@@ -17,6 +17,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity{
 
     String weatherInfo="";
     String flightInfo="";
-    JSONObject fl,we;
+    String locationInfo="";
+    String timezoneInfo="";
+    JSONObject fl,we,loc;
     int val=1;
     String we_key = "e6a50a16eee18b905108ecbc1f5c7335";
     String appid="7f121ed9";
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
          *
          *
          */
-
+        server="www.www.www";
 
 
         /** Capture our View elements */
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity{
         pPickDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showDialog(DATE_DIALOG_ID);
+
             }
         });
 
@@ -98,7 +102,8 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 fl_no=((EditText)findViewById(R.id.fl_no)).getText().toString();
                 src=((EditText)findViewById(R.id.Source)).getText().toString();
-                getLocn(src);
+                System.out.print(src+"\n");
+                getLocn();
             }
         });
     }
@@ -148,7 +153,8 @@ public class MainActivity extends AppCompatActivity{
                             str.append(line).append("\n");
                         }
                         br.close();
-                        String x1="",x2="",y1="",y2="",orientationLat="",orientationLon="";
+                        locationInfo = str.toString();
+                        /*String x1="",x2="",y1="",y2="",orientationLat="",orientationLon="";
                         gmt_offset="";
                         lat="";
                         lon="";
@@ -235,10 +241,18 @@ public class MainActivity extends AppCompatActivity{
                                     double rem = ((k-42) /10)*60;
                                     gmt_offset=gmt_offset.charAt(0)+gmt_offset.substring(1, 2)+String.valueOf(rem).substring(0,2);
                                 }
+                        }*/
+                    }
+                    if(val==4){
+                        System.out.println("****************LOCN************");
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        StringBuilder str = new StringBuilder();
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            str.append(line).append("\n");
                         }
-                        lat+=x1+y1.substring(1,3);
-                        lon+=x2+y2.substring(1,3);;
-                        System.out.println("Lat:"+lat+"\nLon:"+lon+"\nGMT:"+gmt_offset);
+                        br.close();
+                        timezoneInfo = str.toString();
                     }
 
                 } finally {
@@ -279,7 +293,9 @@ public class MainActivity extends AppCompatActivity{
                     Toast.makeText(getApplicationContext(),alth+"Inch",Toast.LENGTH_LONG).show();
 
                     String url=server+"?tmpf="+tmpf+"&dwpf="+dwpf+"&reth="+reth+"&sknt="+sknt+"&alth="+alth;
-                    new Client().execute(url);
+                    String r= String.valueOf(new Client().execute(url));
+                    TextView e=(TextView)findViewById(R.id.Result);
+                    e.setText(r);
                 }
                 if(val==0) {
                     fl = new JSONObject(flightInfo);
@@ -294,9 +310,62 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 if(val==3){
+                    //System.out.print(locationInfo+"\n");
+                    loc = new JSONObject(locationInfo);
+                    JSONArray x=loc.getJSONArray("results");
+                    System.out.print(x.getJSONObject(0)+"\n");
+                    JSONObject l=x.getJSONObject(0);
+                    JSONObject l1=l.getJSONObject("geometry");
+                    JSONObject l2=l1.getJSONObject("location");
+                    lat=l2.getString("lat");
+                    lon=l2.getString("lng");
+                    System.out.print(lat+"  "+lon);
+                    getGMT();
+                }
+                if(val==4){
+                    JSONObject tmp=new JSONObject(timezoneInfo);
+                    System.out.print(tmp+"\n");
+                    gmt_offset=String.valueOf(tmp.getDouble("gmtOffset"));
+                    System.out.print(gmt_offset+"\n\n");
+                    if(!(gmt_offset.charAt(0)=='-'))
+                        gmt_offset="+"+gmt_offset;
+                    System.out.print(gmt_offset+"\n\n");
+                    try {
+                        int dot;
+                        switch (gmt_offset.length()) {
+                            case 2:
+                                gmt_offset = gmt_offset.charAt(0) + "0" + gmt_offset + "00";
+                                break;
+                            case 3:
+                                gmt_offset = gmt_offset.charAt(0) + gmt_offset + "00";
+                                break;
+                            case 4:
+                                dot = gmt_offset.indexOf('.');
+                                if (dot == 2) {
+                                    char k = gmt_offset.charAt(dot + 1);
+                                    double rem = ((k - 48) / 10.0) * 60;
+                                    System.out.print(rem + "\n");
+                                    gmt_offset = gmt_offset.charAt(0) + "0" + gmt_offset.charAt(1) + String.valueOf(rem).substring(0, 2);
+                                }
+                                break;
+                            case 5:
+                                dot = gmt_offset.indexOf('.');
+                                if (dot == 2) {
+                                    String k = gmt_offset.substring(3);
+                                    double rem = (Float.parseFloat(k) / 10) * 60;
+                                    gmt_offset = gmt_offset.charAt(0) + "0" + gmt_offset.charAt(1) + String.valueOf(rem).substring(0, 2);
+                                } else {
+                                    char k = gmt_offset.charAt(dot + 1);
+                                    double rem = ((k - 42) / 10) * 60;
+                                    gmt_offset = gmt_offset.charAt(0) + gmt_offset.substring(1, 2) + String.valueOf(rem).substring(0, 2);
+                                }
+                        }
+                    }
+                    catch (Exception e){
+
+                    }
                     getFlight();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -331,11 +400,15 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-
-    public void getLocn(String IATA){
+    public void getGMT(){
+        val=4;
+        String url="http://api.geonames.org/timezoneJSON?lat="+lat+"&lng="+lon+"&username=demo";
+        new Fetcher().execute(url, null, null);
+    }
+    public void getLocn(){
         val=3;
         System.out.println("*****in getLocn********");
-        String url="http://www.webservicex.net/airport.asmx/getAirportInformationByAirportCode?airportCode="+IATA;
+        String url="https://maps.googleapis.com/maps/api/geocode/json?address="+src+"&key=AIzaSyCJMV-IClVGlkf8UtkimKq9c4wSvkWm1tA";
         System.out.print(url+"\n");
         new Fetcher().execute(url, null, null);
     }

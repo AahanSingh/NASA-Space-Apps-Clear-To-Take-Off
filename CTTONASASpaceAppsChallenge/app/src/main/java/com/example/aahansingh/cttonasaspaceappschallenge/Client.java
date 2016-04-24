@@ -28,14 +28,16 @@ class Client extends AsyncTask<String,Void,String> {
                     str.append(line).append("\n");
                 }
                 br.close();
+                return toString();
             } finally {
                 conn.disconnect();
                 System.out.print(toString()+"\n");
+                return "finally";
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return "fail";
     }
     protected void onPostExecute(String p) {
         try {
