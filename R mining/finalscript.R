@@ -11,6 +11,7 @@ a <- args[5]
 
 mydata <- read.table("final2.csv",header=TRUE,sep = ",")
 #input <- read.table("check1.csv",header=TRUE,sep = ",")
+#test comment for committing 
 
 mydata$X <- NULL
 
@@ -26,10 +27,10 @@ input <- matrix(input,ncol=22)
 colnames(input) = colnames(mydata)
 input <- rbind(input,head(mydata,1))
 
-input$tmpf <-t
-input$dwpf <-d
-input$relh <-h
-input$sknt <-s
+ input$tmpf <-t
+ input$dwpf <-d
+ input$relh <-h
+ input$sknt <-s
 
 
 model0 <- naiveBayes(del0 ~ tmpf+dwpf+relh+sknt,mydata)
@@ -65,71 +66,29 @@ result12 <- predict (model12,input)
 
 
 if( result12 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("12"), fileConn)
-  close(fileConn)
-  
+  print("12")
 }else if( result11 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("11"), fileConn)
-  close(fileConn)
-  
+  print("11")
 }else if( result10 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("10"), fileConn)
-  close(fileConn)
-  
+  print("10")
 }else if( result9 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("9"), fileConn)
-  close(fileConn)
+  print("9")
 }else if( result8 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("8"), fileConn)
-  close(fileConn)
+  print("8")
 }else if( result7 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("7"), fileConn)
-  close(fileConn)
+  print("7")
 }else if( result6 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("6"), fileConn)
-  close(fileConn)
+  print("6")
 }else if( result5 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("5"), fileConn)
-  close(fileConn)
+  print("5")
 }else if( result4 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("4"), fileConn)
-  close(fileConn)
+  print("4")
 }else if( result3 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("3"), fileConn)
-  close(fileConn)
+  print("3")
 }else if( result2 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("2"), fileConn)
-  close(fileConn)
+  print("2")
 }else if( result1 == "Yes"){
-  
-  fileConn<-file("abc.txt")
-  writeLines(c("1"), fileConn)
-  close(fileConn)
+  print("1")
 }else{
-  #  print("0")
-  fileConn<-file("abc.txt")
-  writeLines(c("1"), fileConn)
-  close(fileConn)
+  print("0")
 }
