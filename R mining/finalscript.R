@@ -11,7 +11,7 @@ a <- args[5]
 
 mydata <- read.table("final2.csv",header=TRUE,sep = ",")
 #input <- read.table("check1.csv",header=TRUE,sep = ",")
-
+#test comment for committing 
 
 mydata$X <- NULL
 
