@@ -272,6 +272,7 @@ public class MainActivity extends AppCompatActivity{
                     tmpf=a.getString("temperature");
                     dwpf=a.getString("dewPoint");
                     reth=a.getString("humidity");
+                    System.out.println(reth);
                     reth=reth.substring(2);
                     double tmp=Double.parseDouble(a.getString("windSpeed"));
                     tmp*=0.868976;
@@ -296,7 +297,8 @@ public class MainActivity extends AppCompatActivity{
                     String url=server+"?tmpf="+tmpf+"&dwpf="+dwpf+"&reth="+reth+"&sknt="+sknt+"&alth="+alth;
                     String r= String.valueOf(new Client().execute(url));
                     TextView e=(TextView)findViewById(R.id.Result);
-                    e.setText(r);
+                    String disp=tmpf+"F\n"+dwpf+"F\n"+reth+"Hum\n"+sknt+"Knots\n"+alth+"Inch\n";
+                    e.setText(disp);
                 }
                 if(val==0) {
                     fl = new JSONObject(flightInfo);
@@ -403,7 +405,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void getGMT(){
         val=4;
-        String url="http://api.geonames.org/timezoneJSON?lat="+lat+"&lng="+lon+"&username=demo";
+        String url="http://api.geonames.org/timezoneJSON?lat="+lat+"&lng="+lon+"&username=architb361";
         new Fetcher().execute(url, null, null);
     }
     public void getLocn(){
