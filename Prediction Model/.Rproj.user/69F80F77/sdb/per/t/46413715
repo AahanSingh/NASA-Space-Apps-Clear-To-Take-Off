@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(e1071)\nwhich(colnames(train)==\"tmpf\")#28\nwhich(colnames(train)==\"sknt\")#32\nwhich(colnames(train)==\"alti\")#34\nwhich(colnames(train)==\"gust\")#37\nwhich(colnames(train)==\"skyl1\")#42\nwhich(colnames(train)==\"skyl4\")#45\nsvmModel <- svm(train[,c(28:30,32,34,36)], train$Delayed, type = \"one-classification\")\nprint(svmModel)\nsvmPred <- predict(svmModel, test[,c(28:30,32,34,36)])\neval(svmPred,test$Delayed)",
+    "created" : 1472387967897.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "869991464",
+    "id" : "46413715",
+    "lastKnownWriteTime" : 1472390435,
+    "last_content_update" : 1472390435544,
+    "path" : "~/Development/NASA Clear To Take Off/Prediction Model/svmClassifier.r",
+    "project_path" : "svmClassifier.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

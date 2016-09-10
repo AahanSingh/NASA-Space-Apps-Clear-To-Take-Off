@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rattle)\nlibrary(RColorBrewer)\nlibrary(rpart)\nlibrary(rpart.plot)\ntree <- rpart(formula = Delayed ~ tmpf + dwpf + relh + sknt + alti + vsby , data = train, method=\"class\")\ntreePred <- predict(tree, test, type = \"class\")\neval(treePred,test$Delayed)\nfancyRpartPlot(tree)",
+    "created" : 1472388034160.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2050612691",
+    "id" : "106BB9AE",
+    "lastKnownWriteTime" : 1472390479,
+    "last_content_update" : 1472390479585,
+    "path" : "~/Development/NASA Clear To Take Off/Prediction Model/DesisionTreeClassifier.r",
+    "project_path" : "DesisionTreeClassifier.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,13 @@
+w5 <- read.csv("DataSets/ATL2005.txt")
+w6 <- read.csv("DataSets/ATL2006.txt")
+w7 <- read.csv("DataSets/ATL2007.txt")
+w8 <- read.csv("DataSets/ATL2008.txt")
+w <- rbind(w5,w6,w7,w8)
+w$Date <- as.Date(w$valid)
+w$Time <- format(as.POSIXct(w$valid),format = "%H:%M")
+w$Year <- as.numeric(format(w$Date, format = "%Y"))
+w$Month <- as.numeric(format(w$Date, format = "%m"))
+w$Day <- as.numeric(format(w$Date, format = "%d"))
+w$Time <- as.numeric(gsub(":","",w$Time))
+w <- w[3:27]
+rm(w5,w6,w7,w8)

@@ -1,0 +1,8 @@
+library(rattle)
+library(RColorBrewer)
+library(rpart)
+library(rpart.plot)
+tree <- rpart(formula = Delayed ~ tmpf + dwpf + relh + sknt + alti + vsby , data = train, method="class")
+treePred <- predict(tree, test, type = "class")
+eval(treePred,test$Delayed)
+fancyRpartPlot(tree)

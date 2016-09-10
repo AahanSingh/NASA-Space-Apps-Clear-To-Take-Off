@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(caret)\nlibrary(nnet)\nlibrary(rpart)\nlibrary(rattle)\nlibrary(rpart.plot)\nlibrary(RColorBrewer)\nlibrary(e1071)\nfinal$Delayed[final$DepTime > final$CRSDepTime] <- TRUE\nfinal$Delayed[final$DepTime <= final$CRSDepTime] <- FALSE\nfinal$ANN <- class.ind(final$Delayed)\nt <- createDataPartition(final$Delayed, p = 0.8, list = FALSE)\ntrain <- final[t,]\ntest <- final[-t,]\nrm(t)",
+    "created" : 1472307271376.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "838063627",
+    "id" : "EE4808D5",
+    "lastKnownWriteTime" : 1472462588,
+    "last_content_update" : 1472462588199,
+    "path" : "~/Development/NASA Clear To Take Off/Prediction Model/createPartition.r",
+    "project_path" : "createPartition.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
